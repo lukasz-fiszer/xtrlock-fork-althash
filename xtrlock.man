@@ -2,7 +2,7 @@
 .SH NAME
 xtrlock \- Lock X display until password supplied, leaving windows visible
 .SH SYNOPSIS
-.B xtrlock
+.B xtrlock [-b]
 .SH DESCRIPTION
 .B xtrlock
 locks the X server till the user enters their password at the keyboard.
@@ -26,7 +26,11 @@ generate bells and are otherwise ignored until a timeout has expired.
 The X server screen saver continues to operate normally; if it comes
 into operation the display may be restored by the usual means of
 touching a key (Shift, for example) or the mouse.
-.SH OPTIONS, X RESOURCES, CONFIGURATION
+.SH OPTIONS
+.TP
+\fB\-b\fR
+blank the screen as well as displaying the padlock
+.SH X RESOURCES, CONFIGURATION
 None.
 .SH BUGS
 Additional input devices other than the keyboard and mouse are not
