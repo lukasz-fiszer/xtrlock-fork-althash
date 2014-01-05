@@ -80,16 +80,19 @@ int main(int argc, char **argv){
   XSetWindowAttributes attrib;
   Cursor cursor;
   Pixmap csr_source,csr_mask;
-  XColor csr_fg, csr_bg, dummy;
-  int ret;
+  XColor csr_fg, csr_bg, dummy, black;
+  int ret, screen, blank = 0;
 #ifdef SHADOW_PWD
   struct spwd *sp;
 #endif
   struct timeval tv;
   int tvt, gs;
 
-  if (argc != 1) {
-    fprintf(stderr,"xtrlock (version %s): no arguments allowed\n",program_version);
+  if ((argc == 2) && (strcmp(argv[1], "-b") == 0)) {
+    blank = 1;
+  } else if (argc > 2) {
+    fprintf(stderr,"xtrlock (version %s): no arguments or \"-b\" (blank screen) allowed\n",
+            program_version);
     exit(1);
   }
   
@@ -121,11 +124,22 @@ int main(int argc, char **argv){
 	    program_version);
     exit(1);
   }
-
+  
   attrib.override_redirect= True;
-  window= XCreateWindow(display,DefaultRootWindow(display),
-                        0,0,1,1,0,CopyFromParent,InputOnly,CopyFromParent,
-                        CWOverrideRedirect,&attrib);
+
+  if (blank) {
+    screen = DefaultScreen(display);
+    attrib.background_pixel = BlackPixel(display, screen);
+    window= XCreateWindow(display,DefaultRootWindow(display),
+                          0,0,DisplayWidth(display, screen),DisplayHeight(display, screen),
+                          0,DefaultDepth(display, screen), CopyFromParent, DefaultVisual(display, screen),
+                          CWOverrideRedirect|CWBackPixel,&attrib); 
+    XAllocNamedColor(display, DefaultColormap(display, screen), "black", &black, &dummy);
+  } else {
+    window= XCreateWindow(display,DefaultRootWindow(display),
+                          0,0,1,1,0,CopyFromParent,InputOnly,CopyFromParent,
+                          CWOverrideRedirect,&attrib);
+  }
                         
   XSelectInput(display,window,KeyPressMask|KeyReleaseMask);
 
