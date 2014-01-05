@@ -1,3 +1,11 @@
+xtrlock (2.4) unstable; urgency=low
+
+  * add a -b option to blank the screen (code based on patch by Marcus,
+    waldeck@gmx.de, for which thanks; documentation by myself. 
+    (Closes: #636993)
+
+ -- Matthew Vernon <matthew@debian.org>  Sun, 05 Jan 2014 12:01:48 +0000
+
 xtrlock (2.3) unstable; urgency=low
 
   * remove reference to xlock, which is no longer in Debian (Closes: #721724)
