@@ -90,8 +90,8 @@ int main(int argc, char **argv){
 
   if ((argc == 2) && (strcmp(argv[1], "-b") == 0)) {
     blank = 1;
-  } else if (argc > 2) {
-    fprintf(stderr,"xtrlock (version %s): no arguments or \"-b\" (blank screen) allowed\n",
+  } else if (argc > 1) {
+    fprintf(stderr,"xtrlock (version %s); usage: xtrlock [-b]\n",
             program_version);
     exit(1);
   }
