@@ -108,10 +108,10 @@ int main(int argc, char **argv){
   /* logically, if we need to do the following then the same 
      applies to being installed setgid shadow.  
      we do this first, because of a bug in linux. --jdamery */ 
-  setgid(getgid());
+  if (setgid(getgid())) { perror("setgid"); exit(1); }
   /* we can be installed setuid root to support shadow passwords,
      and we don't need root privileges any longer.  --marekm */
-  setuid(getuid());
+  if (setuid(getuid())) { perror("setuid"); exit(1); }
 
   if (strlen(pw->pw_passwd) < 13) {
     fputs("password entry has no pwd\n",stderr); exit(1);
