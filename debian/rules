@@ -16,7 +16,7 @@ CFLAGS+=-DSHADOW_PWD
 build:
 	$(checkdir)
 	xmkmf
-	$(MAKE) CFLAGS="$(CFLAGS)" CDEBUGFLAGS="" xtrlock
+	$(MAKE) CFLAGS="$(CFLAGS)" CDEBUGFLAGS="" LOCAL_LDFLAGS="$(LDFLAGS)" xtrlock
 	touch build
 
 clean:
