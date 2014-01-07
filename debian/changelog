@@ -1,3 +1,11 @@
+xtrlock (2.6) unstable; urgency=low
+
+  * patch from Simon Ruderich to correctly add hardening flags
+  * check returns of setuid and setgid
+  * build-depend on dpkg-dev
+  
+ -- Matthew Vernon <matthew@debian.org>  Tue, 07 Jan 2014 14:22:55 +0000
+
 xtrlock (2.5) unstable; urgency=low
 
   * correct contributor name (sorry!)
