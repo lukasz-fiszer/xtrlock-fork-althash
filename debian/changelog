@@ -1,3 +1,10 @@
+xtrlock (2.7) unstable; urgency=low
+
+  * patch from Chris Lamb to make builds reproducible by adding -n to gzip
+    invocations (Closes: #777351)
+
+ -- Matthew Vernon <matthew@debian.org>  Sat, 07 Mar 2015 22:34:45 +0000
+
 xtrlock (2.6) unstable; urgency=low
 
   * patch from Simon Ruderich to correctly add hardening flags
