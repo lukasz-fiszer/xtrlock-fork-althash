@@ -45,9 +45,9 @@ binary-arch:	checkroot build
 	;; \
 	esac
 	install -m 644 xtrlock.man debian/tmp/usr/share/man/man1/xtrlock.1x
-	gzip -9v debian/tmp/usr/share/man/man1/xtrlock.1x
+	gzip -9nv debian/tmp/usr/share/man/man1/xtrlock.1x
 	install -m 644 debian/changelog debian/tmp/usr/share/doc/xtrlock
-	gzip -9v debian/tmp/usr/share/doc/xtrlock/*
+	gzip -9nv debian/tmp/usr/share/doc/xtrlock/*
 	install -m 644 debian/copyright debian/tmp/usr/share/doc/xtrlock
 	install -m 644 debian/menu debian/tmp/usr/share/menu/xtrlock
 	install -m 644 debian/xtrlock.lintian-overrides \
