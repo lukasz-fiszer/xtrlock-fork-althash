@@ -81,19 +81,27 @@ int main(int argc, char **argv){
   Cursor cursor;
   Pixmap csr_source,csr_mask;
   XColor csr_fg, csr_bg, dummy, black;
-  int ret, screen, blank = 0;
+  int ret, screen, blank = 0, fork_after = 0;
 #ifdef SHADOW_PWD
   struct spwd *sp;
 #endif
   struct timeval tv;
   int tvt, gs;
 
-  if ((argc == 2) && (strcmp(argv[1], "-b") == 0)) {
-    blank = 1;
-  } else if (argc > 1) {
-    fprintf(stderr,"xtrlock (version %s); usage: xtrlock [-b]\n",
-            program_version);
-    exit(1);
+  while (argc > 1) {
+    if ((strcmp(argv[1], "-b") == 0)) {
+      blank = 1;
+      argc--;
+      argv++;
+    } else if ((strcmp(argv[1], "-f") == 0)) {
+      fork_after = 1;
+      argc--;
+      argv++;
+    } else {
+      fprintf(stderr,"xtrlock (version %s); usage: xtrlock [-b] [-f]\n",
+              program_version);
+      exit(1);
+    }
   }
   
   errno=0;  pw= getpwuid(getuid());
@@ -206,6 +214,17 @@ int main(int argc, char **argv){
     fprintf(stderr,"xtrlock (version %s): cannot grab pointer\n",
 	    program_version);
     exit(1);
+  }
+
+  if (fork_after) {
+    pid_t pid = fork();
+    if (pid < 0) {
+      fprintf(stderr,"xtrlock (version %s): cannot fork: %s\n",
+              program_version, strerror(errno));
+      exit(1);
+    } else if (pid > 0) {
+      exit(0);
+    }
   }
 
   for (;;) {
