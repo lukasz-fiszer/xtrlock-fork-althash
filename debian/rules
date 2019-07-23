@@ -2,10 +2,12 @@
 # debian/rules file for xtrlock-2.0
 # Based upon the sample debian.rules file by Ian Jackson.
 
+include /usr/share/dpkg/architecture.mk
+-include /usr/share/dpkg/buildtools.mk
+
 package=xtrlock
 
-arch=$(shell dpkg --print-architecture)
-STRIP=strip
+STRIP=$(DEB_HOST_GNU_TYPE)-strip
 
 DPKG_EXPORT_BUILDFLAGS = 1
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
@@ -15,8 +17,7 @@ CFLAGS+=-DSHADOW_PWD
 
 build:
 	$(checkdir)
-	xmkmf
-	$(MAKE) CFLAGS="$(CFLAGS)" CDEBUGFLAGS="" LOCAL_LDFLAGS="$(LDFLAGS)" xtrlock
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) xtrlock.c -o xtrlock -lcrypt -lX11
 	touch build
 
 clean:
