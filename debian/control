@@ -2,12 +2,18 @@ Source: xtrlock
 Maintainer: Matthew Vernon <matthew@debian.org>
 Section: x11
 Priority: optional
-Build-Depends: libx11-dev, x11proto-core-dev
+Build-Depends:
+ debhelper-compat (= 12),
+ libx11-dev,
+ x11proto-core-dev,
 Standards-Version: 4.4.0
+Rules-Requires-Root: binary-targets
 
 Package: xtrlock
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
 Description: Minimal X display lock program
  xtrlock is a very minimal X display lock program, which uses nothing
  except the Xlib library. It doesn't obscure the screen, it is
