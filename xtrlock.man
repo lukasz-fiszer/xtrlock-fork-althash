@@ -40,7 +40,7 @@ None.
 Additional input devices other than the keyboard and mouse are not
 disabled.
 
-The timeouts, bitmaps and mouse cursor colour cannot be modifed.
+The timeouts, bitmaps and mouse cursor colour cannot be modified.
 .SH SEE ALSO
 .BR X "(1), Xlib Documentation."
 .SH AUTHOR
