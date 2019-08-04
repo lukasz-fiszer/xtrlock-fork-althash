@@ -1,0 +1,4 @@
+Tests: 0001-smoketest
+Depends:
+ @,
+Restrictions: allow-stderr

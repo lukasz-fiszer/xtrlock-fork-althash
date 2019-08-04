@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/bin/xtrlock --help 2>&1 | grep usage
