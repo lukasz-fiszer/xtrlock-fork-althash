@@ -1,5 +1,6 @@
 Source: xtrlock
 Maintainer: Matthew Vernon <matthew@debian.org>
+Uploaders: Chris Lamb <lamby@debian.org>
 Section: x11
 Priority: optional
 Build-Depends:
