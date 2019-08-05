@@ -1,29 +1,35 @@
-This is Debian GNU/Linux's prepackaged version of Ian Jackson's xtrlock
-utility.  This package provides a minimal X display lock program.
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Contact: Ian Jackson <ian@chiark.greenend.org.uk>
+Upstream-Name: xtrlock
 
-This package was put together by Stephen Early
-<steve@greenend.org.uk>, from the source by Ian Jackson, which he
-obtained from Usenet.  Apart from a couple of bugfixes the changes
-were very minimal - merely adding support for the Debian package
-maintenance scheme, by adding various debian.* files.
+Files: *
+Copyright:
+ © 1993, 1994 Ian Jackson <ian@chiark.greenend.org.uk>
+ © 1996 Marek Michalkiewicz <marekm@i17linuxb.ists.pwr.wroc.pl>
+License: GPL-3+
 
-This package is now maintained by Matthew Vernon <matthew@debian.org>.
+Files: debian/*
+Copyright:
+ © 1995 Stephen Early <steve@greenend.org.uk>
+ © 1997 — 2002 Martin Mitchell <martin@debian.org>
+ © 2002 Otavio Salvador <otavio@debian.org>
+ © 2005 — 2016 Matthew Vernon <matthew@debian.org>
+ © 2019 Chris Lamb <lamby@debian.org>
+License: GPL-3+
 
-Program Copyright (C) 1993, 1994 Ian Jackson.
-Modifications for Debian GNU/Linux Copyright (C) 1995 Stephen Early.
-Modifications for Debian GNU/Linux since v2.0-9 Copyright (C)
-2005-2012 Matthew Vernon
-
-This program and its documentation are free software; you can
-redistribute them and/or modify them under the terms of the GNU
-General Public License as published by the Free Software Foundation;
-either version 3, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details.
-
-On Debian GNU/Linux, a copy of the GNU General Public License version
-3 may be found in /usr/share/common-licenses/GPL-3. It is also
-included in the source package as GPL-3.txt
+License: GPL-3+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 2 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General Public License
+ can be found in the /usr/share/common-licenses/GPL-3 file.
