@@ -1,0 +1,28 @@
+# Example systemd service to lock screen on sleep/suspend
+#
+# To install:
+#
+#  * Copy this file to /etc/systemd/system/xtrlock.service
+#  * Replace the "FIXME" entries.
+#  * Run: sudo systemctl enable xtrlock
+# 
+# As user units cannot depend on system units, we cannot provide this via the
+# per-user systemd instance.
+#
+#  -- Chris Lamb <lamby@debian.org>  Tue, 06 Aug 2019 16:05:59 +0100
+
+[Unit]
+Description=Lock screen
+Requires=network.target
+After=sleep.target
+DefaultDependencies=no
+
+[Service]
+ExecStart=/usr/bin/xtrlock
+User=FIXME
+Group=FIXME
+Environment=DISPLAY=:0
+Type=oneshot
+
+[Install]
+WantedBy=sleep.target

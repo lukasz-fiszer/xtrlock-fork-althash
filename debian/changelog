@@ -1,3 +1,27 @@
+xtrlock (2.9) unstable; urgency=medium
+
+  * Apply a patch from Helmut Grohne to move away from the (deprecated) xmkmf.
+    (Closes: #902648)
+  * Correct a typo in the manual page.
+  * Add Vcs-Git and Vcs-Browser metadata; packaging has been added to Salsa.
+  * Add an example systemd service file to lock screen on suspend/sleep.
+  * debian/rules:
+    - Move to minimal "dh" style.
+    - Ensure that patchlevel.h always matches the version in debian/changelog.
+  * Misc packaging improvements:
+    - Add a debian/gitlab-ci.yml.
+    - Drop trailing whitepaces to prevent future VCS noise.
+    - Explicitly specify the 3.0 (native) source format.
+    - Drop versioned dependency on dpkg-dev for a version now satisfied in
+      oldoldstable.
+    - Drop double-space in long description.
+    - Move to DEP-5 copyright file.
+    - Add a simple autopkgtest.
+  * Add myself to Uploaders.
+  * Bump Standards-Version to 4.4.0.
+
+ -- Chris Lamb <lamby@debian.org>  Tue, 06 Aug 2019 16:08:41 +0100
+
 xtrlock (2.8) unstable; urgency=low
 
   * patch from Simon Tatham to add a -f option [fork, and return success
@@ -17,7 +41,7 @@ xtrlock (2.6) unstable; urgency=low
   * patch from Simon Ruderich to correctly add hardening flags
   * check returns of setuid and setgid
   * build-depend on dpkg-dev
-  
+
  -- Matthew Vernon <matthew@debian.org>  Tue, 07 Jan 2014 14:22:55 +0000
 
 xtrlock (2.5) unstable; urgency=low
@@ -31,7 +55,7 @@ xtrlock (2.5) unstable; urgency=low
 xtrlock (2.4) unstable; urgency=low
 
   * add a -b option to blank the screen (code based on patch by Markus,
-    waldeck@gmx.de, for which thanks; documentation by myself. 
+    waldeck@gmx.de, for which thanks; documentation by myself.
     (Closes: #636993)
 
  -- Matthew Vernon <matthew@debian.org>  Sun, 05 Jan 2014 12:01:48 +0000
@@ -48,7 +72,7 @@ xtrlock (2.2) unstable; urgency=low
   * Change menu section to Screen/Locking
   * Update standards-version
   * Add a lintian override for being setgid shadow
-  
+
  -- Matthew Vernon <matthew@debian.org>  Tue, 26 Jun 2012 20:22:20 +0100
 
 xtrlock (2.1) unstable; urgency=low
@@ -61,7 +85,7 @@ xtrlock (2.1) unstable; urgency=low
     in the binary package (rather than one and a symlink)
   * Don't install README.Debian any more, as it's mostly just build
     instructions
-  
+
  -- Matthew Vernon <matthew@debian.org>  Tue, 26 Jun 2012 19:12:02 +0100
 
 xtrlock (2.0-14) unstable; urgency=low
@@ -87,23 +111,23 @@ xtrlock (2.0-11) unstable; urgency=low
   * Fix build-depends: for new etch (closes: #346840)
 
  -- Matthew Vernon <matthew@debian.org>  Sat, 14 Jan 2006 15:30:28 +0000
-	
+
 xtrlock (2.0-10) unstable; urgency=low
 
   * Take over this package, since I seem to have some tuits
   * Correct the Author's address in the manpage to something sensible
   * Similarly the original packager's.
   * For reference, the security problem fixed in -9 was CAN-2005-0079
-	
+
  -- Matthew Vernon <matthew@debian.org>  Thu, 20 Jan 2005 14:02:10 +0000
-	
+
 xtrlock (2.0-9) unstable; urgency=high
 
   * Fix the problem whereby we unlocked on long input (closes: #278191, #278190)
   * tidy up a switch statement (closes: #264173)
 
  -- Matthew Vernon <matthew@debian.org>  Mon, 17 Jan 2005 10:47:09 +0000
-	
+
 xtrlock (2.0-8) unstable; urgency=low
 
   * Uploading with maintainer set to QA group
@@ -123,10 +147,10 @@ xtrlock (2.0-6.1) unstable; urgency=low
 
   * NMU
   * Removed the buffer overrun potentiallity (closes: #154738)
-  * Update the code for remove the possibilty to read shadow file 
+  * Update the code for remove the possibilty to read shadow file
   (closes: #154740)
   * Fix spelling error in the copyright file
-  * Fix the place where is stored the common-licenses 
+  * Fix the place where is stored the common-licenses
   * Update the debian/rules to:
     - strip the /usr/X11R6/bin/xtrlock
     - include the section and priority in control
@@ -164,7 +188,7 @@ xtrlock (2.0-3) unstable; urgency=low
  -- Martin Mitchell <martin@debian.org>  Thu, 27 Nov 1997 01:34:14 +1100
 
 xtrlock (2.0-2.2) unstable; urgency=low
-  
+
   * Non-maintainer release.
   * Libc6 compile.
   * Update from pre-2.0.0.0 standards.
@@ -180,6 +204,3 @@ gzip manpage
 xtrlock-2.0 Debian 0 - sde
 
 Initial release.
-
-
-
