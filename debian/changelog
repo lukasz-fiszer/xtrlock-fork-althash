@@ -1,3 +1,27 @@
+xtrlock (2.9) unstable; urgency=medium
+
+  * Apply a patch from Helmut Grohne to move away from the (deprecated) xmkmf.
+    (Closes: #902648)
+  * Correct a typo in the manual page.
+  * Add Vcs-Git and Vcs-Browser metadata; packaging has been added to Salsa.
+  * Add an example systemd service file to lock screen on suspend/sleep.
+  * debian/rules:
+    - Move to minimal "dh" style.
+    - Ensure that patchlevel.h always matches the version in debian/changelog.
+  * Misc packaging improvements:
+    - Add a debian/gitlab-ci.yml.
+    - Drop trailing whitepaces to prevent future VCS noise.
+    - Explicitly specify the 3.0 (native) source format.
+    - Drop versioned dependency on dpkg-dev for a version now satisfied in
+      oldoldstable.
+    - Drop double-space in long description.
+    - Move to DEP-5 copyright file.
+    - Add a simple autopkgtest.
+  * Add myself to Uploaders.
+  * Bump Standards-Version to 4.4.0.
+
+ -- Chris Lamb <lamby@debian.org>  Tue, 06 Aug 2019 16:08:41 +0100
+
 xtrlock (2.8) unstable; urgency=low
 
   * patch from Simon Tatham to add a -f option [fork, and return success
