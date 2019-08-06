@@ -2,9 +2,13 @@
 
 DPKG_EXPORT_BUILDFLAGS = 1
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
-include /usr/share/dpkg/buildflags.mk
+include /usr/share/dpkg/default.mk
 
 CFLAGS += -DSHADOW_PWD
+
+ifeq (,$(findstring ^$(DEB_VERSION_UPSTREAM),^$(shell cut -d'"' -f2 patchlevel.h)))
+$(error (patchlevel.h out of sync with Debian version))
+endif
 
 %:
 	dh $@
