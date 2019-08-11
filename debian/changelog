@@ -1,3 +1,10 @@
+xtrlock (2.10) unstable; urgency=medium
+
+  * Apply patch from Helmut Grohne to seed CC from dpkg's
+    buildtools.mk. (Closes: #934465)
+
+ -- Matthew Vernon <matthew@debian.org>  Sun, 11 Aug 2019 12:12:06 +0100
+
 xtrlock (2.9) unstable; urgency=medium
 
   * Apply a patch from Helmut Grohne to move away from the (deprecated) xmkmf.
