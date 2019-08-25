@@ -5,7 +5,7 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 include /usr/share/dpkg/default.mk
 -include /usr/share/dpkg/buildtools.mk
 
-CFLAGS += -DSHADOW_PWD
+CFLAGS += -DSHADOW_PWD -DMULTITOUCH
 
 ifeq (,$(findstring ^$(firstword $(subst +, ,$(DEB_VERSION_UPSTREAM))),^$(shell cut -d'"' -f2 patchlevel.h)))
 $(error (patchlevel.h out of sync with Debian version))
@@ -15,7 +15,7 @@ endif
 	dh $@
 
 override_dh_auto_build:
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) xtrlock.c -o xtrlock -lcrypt -lX11
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) xtrlock.c -o xtrlock -lcrypt -lX11 -lXi
 
 override_dh_fixperms:
 	dh_fixperms -X/usr/bin/xtrlock

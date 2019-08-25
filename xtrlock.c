@@ -41,6 +41,11 @@
 #include <shadow.h>
 #endif
 
+#ifdef MULTITOUCH
+#include <X11/extensions/XInput.h>
+#include <X11/extensions/XInput2.h>
+#endif
+
 #include "lock.bitmap"
 #include "mask.bitmap"
 #include "patchlevel.h"
@@ -70,6 +75,32 @@ int passwordok(const char *s) {
   return !strcmp(crypt(s, pw->pw_passwd), pw->pw_passwd);
 #endif
 }
+
+#if MULTITOUCH
+XIEventMask evmask;
+
+/* (Optimistically) attempt to grab multitouch devices which are not
+ * intercepted via XGrabPointer. */
+void handle_multitouch(Cursor cursor) {
+  XIDeviceInfo *info;
+  int xi_ndevices;
+
+  info = XIQueryDevice(display, XIAllDevices, &xi_ndevices);
+
+  for (int i=0; i < xi_ndevices; i++) {
+    XIDeviceInfo *dev = &info[i];
+
+    for (int j=0; j < dev->num_classes; j++) {
+      if (dev->classes[j]->type == XITouchClass &&
+          dev->use == XISlavePointer) {
+        XIGrabDevice(display, dev->deviceid, window, CurrentTime, cursor,
+                     GrabModeAsync, GrabModeAsync, False, &evmask);
+      }
+    }
+  }
+  XIFreeDeviceInfo(info);
+}
+#endif
 
 int main(int argc, char **argv){
   XEvent ev;
@@ -132,7 +163,32 @@ int main(int argc, char **argv){
 	    program_version);
     exit(1);
   }
+
+#ifdef MULTITOUCH
+  unsigned char mask[XIMaskLen(XI_LASTEVENT)];
+  int xi_major = 2, xi_minor = 2, xi_opcode, xi_error, xi_event;
+
+  if (!XQueryExtension(display, INAME, &xi_opcode, &xi_event, &xi_error)) {
+    fprintf(stderr, "xtrlock (version %s): No X Input extension\n",
+            program_version);
+    exit(1);
+  }
   
+  if (XIQueryVersion(display, &xi_major, &xi_minor) != Success ||
+      xi_major * 10 + xi_minor < 22) {
+    fprintf(stderr,"xtrlock (version %s): Need XI 2.2\n",
+            program_version);
+    exit(1);
+  }
+
+  evmask.mask = mask;
+  evmask.mask_len = sizeof(mask);
+  memset(mask, 0, sizeof(mask));
+  evmask.deviceid = XIAllDevices;
+  XISetMask(mask, XI_HierarchyChanged);
+  XISelectEvents(display, DefaultRootWindow(display), &evmask, 1);
+#endif
+
   attrib.override_redirect= True;
 
   if (blank) {
@@ -216,6 +272,10 @@ int main(int argc, char **argv){
     exit(1);
   }
 
+#ifdef MULTITOUCH
+  handle_multitouch(cursor);
+#endif
+
   if (fork_after) {
     pid_t pid = fork();
     if (pid < 0) {
@@ -265,6 +325,15 @@ int main(int argc, char **argv){
         break;
       }
       break;
+#if MULTITOUCH
+    case GenericEvent:
+      if (ev.xcookie.extension == xi_opcode &&
+          XGetEventData(display,&ev.xcookie) &&
+          ev.xcookie.evtype == XI_HierarchyChanged) {
+        handle_multitouch(cursor);
+      }
+      break;
+#endif
     default:
       break;
     }
