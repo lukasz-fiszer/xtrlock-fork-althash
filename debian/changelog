@@ -1,3 +1,9 @@
+xtrlock (2.11) unstable; urgency=medium
+
+  * Ensure that our version check works with binNMUs. (Closes: #935697)
+
+ -- Chris Lamb <lamby@debian.org>  Sun, 25 Aug 2019 11:15:35 +0100
+
 xtrlock (2.10) unstable; urgency=medium
 
   * Apply patch from Helmut Grohne to seed CC from dpkg's
