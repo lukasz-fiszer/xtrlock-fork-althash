@@ -1,7 +1,17 @@
 xtrlock (2.12) unstable; urgency=medium
 
   * CVE-2016-10894: Attempt to grab multitouch devices which are not
-    intercepted via XGrabPointer. (Closes: #830726)
+    intercepted via XGrabPointer.
+
+    xtrlock did not block multitouch events so an attacker could still input
+    and thus control various programs such as Chromium, etc. via so-called
+    "multitouch" events such as pan scrolling, "pinch and zoom", or even being
+    able to provide regular mouse clicks by depressing the touchpad once and
+    then clicking with a secondary finger.
+
+    This fix does not the situation where Eve plugs in a multitouch device
+    *after* the screen has been locked. For more information on this angle,
+    please see <https://bugs.debian.org/830726#115>. (Closes: #830726)
   * Bump Standards-Version to 4.4.1.
 
  -- Chris Lamb <lamby@debian.org>  Fri, 11 Oct 2019 12:41:39 -0700
