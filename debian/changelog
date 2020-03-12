@@ -1,3 +1,11 @@
+xtrlock (2.13) unstable; urgency=medium
+
+  * Add a warning that xtrlock/X11 does not support grabbing events under
+    Wayland. (Closes: #953319)
+  * Bump Standards-Version to 4.5.0.
+
+ -- Chris Lamb <lamby@debian.org>  Thu, 12 Mar 2020 15:06:15 +0000
+
 xtrlock (2.12) unstable; urgency=medium
 
   * CVE-2016-10894: Attempt to grab multitouch devices which are not
