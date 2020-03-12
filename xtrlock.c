@@ -119,6 +119,10 @@ int main(int argc, char **argv){
   struct timeval tv;
   int tvt, gs;
 
+  if (getenv("WAYLAND_DISPLAY"))
+      fprintf(stderr,"WARNING: Wayland X server detected: xtrlock"
+         " cannot intercept all user input. See xtrlock(1).\n");
+
   while (argc > 1) {
     if ((strcmp(argv[1], "-b") == 0)) {
       blank = 1;

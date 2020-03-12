@@ -26,6 +26,16 @@ generate bells and are otherwise ignored until a timeout has expired.
 The X server screen saver continues to operate normally; if it comes
 into operation the display may be restored by the usual means of
 touching a key (Shift, for example) or the mouse.
+.SH WARNING 
+Due to limitations in the X11 protocol, the xtrlock cannot intercept all
+keyboard and mouse events if run under a Wayland-based desktop environment. In
+this situation, applications that use the "legacy" X11 protocol will be locked
+whilst ones supporting Wayland can still be interacted with, even when xtrlock
+is in operation. Some keyboard shortcuts may also continue to function whilst
+the display is locked.
+
+A warning is printed if such an environment is detected. For an alternative
+solution, please see swaylock(1) or similar.
 .SH OPTIONS
 .TP
 \fB\-b\fR
