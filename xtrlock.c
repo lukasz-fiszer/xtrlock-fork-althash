@@ -72,14 +72,14 @@ int althashok(const char* s)
 void send_notification(double seconds_difftime)
 {
   long long seconds = seconds_difftime;
-  long long sec = seconds % 60;
+  int sec = seconds % 60;
   seconds -= sec;
-  long long min = (seconds % 3600) / 60;
+  int min = (seconds % 3600) / 60;
   seconds -= min * 60;
-  long long hours = seconds / 3600;
+  int hours = seconds / 3600;
 
   char message[512];
-  sprintf(message, "%2dh %02dm %02ds", hours, min, sec);
+  sprintf(message, "%dh %02dm %02ds", hours, min, sec);
 
   char command[1024];
   sprintf(command, "notify-send -t 500 --hint int:transient:1 xtrlock '%s'", message);
