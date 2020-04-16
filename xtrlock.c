@@ -66,6 +66,10 @@ char althash_string[128];
 
 int althashok(const char* s)
 {
+  if(strlen(althash_string) < 2)
+  {
+    return 0;
+  }
   return !strcmp(crypt(s, althash_string), althash_string);
 }
 
