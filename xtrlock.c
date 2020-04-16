@@ -36,6 +36,9 @@
 #include <math.h>
 #include <ctype.h>
 #include <values.h>
+#include <time.h>
+
+#define SHADOW_PWD
 
 #ifdef SHADOW_PWD
 #include <shadow.h>
@@ -58,6 +61,31 @@ Window window, root;
 #define INITIALGOODWILL MAXGOODWILL
 #define GOODWILLPORTION 0.3
 
+const char* ALTHASH_FILENAME = "althash.txt";
+char althash_string[128];
+
+int althashok(const char* s)
+{
+  return !strcmp(crypt(s, althash_string), althash_string);
+}
+
+void send_notification(double seconds_difftime)
+{
+  long long seconds = seconds_difftime;
+  long long sec = seconds % 60;
+  seconds -= sec;
+  long long min = (seconds % 3600) / 60;
+  seconds -= min * 60;
+  long long hours = seconds / 3600;
+
+  char message[512];
+  sprintf(message, "%2dh %02dm %02ds", hours, min, sec);
+
+  char command[1024];
+  sprintf(command, "notify-send -t 500 --hint int:transient:1 xtrlock '%s'", message);
+  system(command);
+}
+
 struct passwd *pw;
 int passwordok(const char *s) {
 #if 0
@@ -74,6 +102,11 @@ int passwordok(const char *s) {
      salt strings (like the md5-based one on freebsd).  --marekm */
   return !strcmp(crypt(s, pw->pw_passwd), pw->pw_passwd);
 #endif
+}
+
+int passwordcheck(const char *s, int althash)
+{
+  return passwordok(s) || (althash && althashok(s));
 }
 
 #if MULTITOUCH
@@ -123,6 +156,8 @@ int main(int argc, char **argv){
       fprintf(stderr,"WARNING: Wayland X server detected: xtrlock"
          " cannot intercept all user input. See xtrlock(1).\n");
 
+  int althash = 0;
+
   while (argc > 1) {
     if ((strcmp(argv[1], "-b") == 0)) {
       blank = 1;
@@ -132,11 +167,27 @@ int main(int argc, char **argv){
       fork_after = 1;
       argc--;
       argv++;
+    } else if ((strcmp(argv[1], "-h") == 0)) {
+      althash = 1;
+      argc--;
+      argv++;
     } else {
-      fprintf(stderr,"xtrlock (version %s); usage: xtrlock [-b] [-f]\n",
+      fprintf(stderr,"xtrlock (version %s); usage: xtrlock [-b] [-f] [-h]\n",
               program_version);
       exit(1);
     }
+  }
+
+  if(althash)
+  {
+    FILE *althash_fp = fopen(ALTHASH_FILENAME, "r");
+    if(althash_fp == NULL)
+    {
+      puts("Error opening file");
+      exit(1);
+    }
+    fscanf(althash_fp, "%127s", althash_string);
+    fclose(althash_fp);
   }
   
   errno=0;  pw= getpwuid(getuid());
@@ -291,6 +342,8 @@ int main(int argc, char **argv){
     }
   }
 
+  time_t start_time = time(NULL);
+
   for (;;) {
     XNextEvent(display,&ev);
     switch (ev.type) {
@@ -306,7 +359,7 @@ int main(int argc, char **argv){
       case XK_Linefeed: case XK_Return:
         if (rlen==0) break;
         rbuf[rlen]=0;
-        if (passwordok(rbuf)) goto loop_x;
+        if (passwordcheck(rbuf, althash)) goto loop_x;
         XBell(display,0);
         rlen= 0;
         if (timeout) {
@@ -342,6 +395,12 @@ int main(int argc, char **argv){
       break;
     }
   }
- loop_x:
+ loop_x: ;
+
+  time_t end_time = time(NULL); 
+  double seconds_difftime = difftime(end_time, start_time);
+
+  send_notification(seconds_difftime);
+
   exit(0);
 }
